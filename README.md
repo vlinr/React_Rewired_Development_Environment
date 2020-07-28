@@ -19,18 +19,18 @@ typescript...
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Directory Structure
->>>>--| public  ----Storage of public documents
->>>>--| src
->>>>>>--| actions  ----redux action
->>>>>>--| components  ----componets
->>>>>>--| config  ----router configuire
->>>>>>--| constants  ----redux type
->>>>>>--| layouts  ---- layout
->>>>>>--| pages  ---- view
->>>>>>--| reducers  ---- redux reducer
->>>>>>--| request  ---- server request method
->>>>>>--| routers  ---- custom router
->>>>>>--| sagas  ---- redux saga
+>>>>--| public  ----Storage of public documents<br />
+>>>>--| src<br />
+>>>>>>--| actions  ----redux action<br />
+>>>>>>--| components  ----componets<br />
+>>>>>>--| config  ----router configuire<br />
+>>>>>>--| constants  ----redux type<br />
+>>>>>>--| layouts  ---- layout<br />
+>>>>>>--| pages  ---- view<br />
+>>>>>>--| reducers  ---- redux reducer<br />
+>>>>>>--| request  ---- server request method<br />
+>>>>>>--| routers  ---- custom router<br />
+>>>>>>--| sagas  ---- redux saga<br />
 
 ## Available Scripts
 
