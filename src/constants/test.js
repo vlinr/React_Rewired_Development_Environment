@@ -1,0 +1,2 @@
+export const TEST_DEFAULT = "TEST_DEFAULT";
+export const TEST_SUCCESS = "TEST_SUCCESS";
