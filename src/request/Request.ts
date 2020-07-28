@@ -4,10 +4,10 @@ export interface RequestParams {
     url?: string  //请求的前缀，也就是域名，如果使用通用域名则可以不穿
     api: string,  //请求的api
     method?: string, //请求的方式
-    cors?: boolean,
-    headers?: any,
-    data?: any,
-    dataType?: string
+    cors?: boolean, //是否跨域共享资源
+    headers?: any,  //设置请求头，一个对象
+    data?: any, //请求数据，一个对象
+    dataType?: string //数据类型
 }
 
 export interface Headers {

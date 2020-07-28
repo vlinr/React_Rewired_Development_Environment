@@ -33,13 +33,8 @@ const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
 const theme = require('./theme.js');
 // SKIP_PREFLIGHT_CHECK = true
 
-/**
- * 生产环境是否打包 Source Map 两种方法
- *
- */
 const rewiredMap = () => config => {
     config.devtool = config.mode === 'development' ? 'cheap-module-source-map' : false
-
     return config
 }
 process.env.PORT = 3000
@@ -55,6 +50,7 @@ const hotLoader = () => (config, env) => {
 }
 // build--->prod --->文件设置
 const appBuildPathFile = () => config => {
+    console.log(config,111)
     if (config.mode === 'development') {
     } else if (config.mode === 'production') {
         // 关闭sourceMap
@@ -158,7 +154,8 @@ module.exports = {
             lessOptions: {  //新版本写法
                 noIeCompat: true,
                 javascriptEnabled: true,
-                modifyVars: { ...theme }
+                modifyVars: { ...theme },
+                modules: true
             }
             // localIdentName: '[local]--[hash:base64:5]', // 自定义 CSS Modules 的 localIdentName
         }),
@@ -196,15 +193,19 @@ module.exports = {
         // 热跟新
         hotLoader(),  //需要安装和修改index.js
         // 配置babel解析器
-        addBabelPlugins(['@babel/plugin-proposal-decorators', { legacy: true }], ["@babel/plugin-proposal-nullish-coalescing-operator"], ["@babel/plugin-proposal-optional-chaining"]),
+        addBabelPlugins(
+            ['@babel/plugin-proposal-decorators',{ legacy: true }],
+            ["@babel/plugin-proposal-nullish-coalescing-operator"],
+            ["@babel/plugin-proposal-optional-chaining"]
+        ),
         //启用ES7的修改器语法（babel 7）
         // ['@babel/plugin-proposal-decorators', {legacy: true}],
         // ['@babel/plugin-proposal-class-properties', {loose: true}],
         // 打包编译完成提醒
         addWebpackPlugin(
             new WebpackBuildNotifierPlugin({
-                title: '',
-                logo: path.resolve('./public/logo.svg'),
+                title: '测试项目',
+                logo: path.resolve('./public/logo192.png'),
                 suppressSuccess: true
             }),
             new MiniCssExtractPlugin({

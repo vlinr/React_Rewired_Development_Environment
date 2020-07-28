@@ -10,13 +10,15 @@ var mainWindow = null ;  //声明要打开的主窗口
 app.on('ready',()=>{
     mainWindow = new BrowserWindow({width:400,height:400})   //设置打开的窗口大小
     mainWindow.loadURL('http://localhost:3000')  //加载那个页面
-    mainWindow.webContents.openDevTools({mode:'right'});
+    // mainWindow.webContents.openDevTools({mode:'right'});
     //监听关闭事件，把主窗口设置为null
     mainWindow.on('closed',()=>{
         mainWindow = null
     })
-    globalShortcut.register('F12',()=>{
-        mainWindow.webContents.openDevTools({mode:'right'});
+    let webContents = mainWindow.webContents;
+    //ctrl+f12打开控制台
+    globalShortcut.register('CommandOrControl+F12',()=>{
+        webContents.isDevToolsOpened()?webContents.closeDevTools():mainWindow.webContents.openDevTools({mode:'right'});
     })
 })
 

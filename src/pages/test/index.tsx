@@ -1,5 +1,5 @@
 import * as React from 'react'
-import './index.less';
+import Ball from '../../components/Ball';
 const useCallback = React.useCallback;
 const memo = React.memo;
 
@@ -21,9 +21,7 @@ function TestPage() {
     return <div className="test" onClick={() => {
         console.log(getUrlParams(window.location.href, 'token'))
     }}>
-        <span className="t_span">
-            Electron & React
-        </span>
+        <Ball name={'Electron & React'} />
     </div>
 }
 
