@@ -1,10 +1,10 @@
 import * as React from 'react';
-import './layout2.less';
+import styles from './layout2.module.less';
 import { Link, useHistory } from 'react-router-dom';
 //生成访问的item
 import ROUTER_CONFIG, { RouteListType } from '../config/router.config';
 const { useState, useCallback, useEffect } = React;
-
+console.log(styles)
 // function childMap(data: RouteListType) {
 //     return <div key={`${data.path}`}>
 //         <Link to={`${data.path}`} className={`${routerSelectKey == data.path}`} target={data.isNewWindow && '_blank' || ''}>{data.name}</Link>
@@ -39,7 +39,7 @@ function Layout2(props: any): React.ReactNode {
     const childMap: Function = useCallback(
         (data: RouteListType) => {
             return <div key={`${data.path}`}>
-                <Link to={`${data.path}`} className={`${routerSelectKey == data.path && 'active'}`} target={data.isNewWindow && '_blank' || ''}>{data.name}</Link>
+                <Link to={`${data.path}`} className={`${routerSelectKey == data.path && styles.active}`} target={data.isNewWindow && '_blank' || ''}>{data.name}</Link>
                 {
                     data.children && data.children.map((child: RouteListType) => childMap(child))
                 }
@@ -63,13 +63,13 @@ function Layout2(props: any): React.ReactNode {
     return (
         <>
             {/**渲染路由**/}
-            <div className="menu">
+            <div className={styles.menu}>
                 {
                     routerToJSX(ROUTER_CONFIG)
                 }
             </div>
 
-            <div className="right">
+            <div className={styles.right}>
                 {children}
             </div>
         </>

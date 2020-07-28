@@ -50,7 +50,6 @@ const hotLoader = () => (config, env) => {
 }
 // build--->prod --->文件设置
 const appBuildPathFile = () => config => {
-    console.log(config,111)
     if (config.mode === 'development') {
     } else if (config.mode === 'production') {
         // 关闭sourceMap

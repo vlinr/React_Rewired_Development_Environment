@@ -102,3 +102,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### `yarn add --dev react-app-rewire-less-modules`
+If you want to use CSS modules, you can use the above command to install, and then name the style file as *.module.less or *.module.css
