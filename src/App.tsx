@@ -1,9 +1,8 @@
 // import * as React from 'react';
 
 import './App.less';
-
 import { hot } from 'react-hot-loader/root';
-
+import AppRouter from './routers/index';
 //使用redux,hooks
 // import { useDispatch, useSelector } from 'react-redux';
 
@@ -27,9 +26,7 @@ function App() {
   // useEffect(() => {
   //   dispatch(reduxTest('我是改变的值')); //发起更改
   // }, [])
-  return (
-    require('./routers/index').default
-  );
+  return AppRouter;
 }
 
 

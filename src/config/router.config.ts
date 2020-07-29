@@ -4,16 +4,19 @@ import TestPage1 from '../pages/test1/index';
 import TestPage2 from '../pages/test2/index';
 import Layout1 from '../layouts/layout1';
 import Layout2 from '../layouts/layout2';
+import NotFound from '../pages/NotFound';
 
 //子集类型
 export interface RouteListType {
-    path: String,
-    name: String,
+    path: string,
+    name: string,
     component: React.ReactNode,
     layout?: React.ReactNode,
     exact?: boolean,
     children?: Array<RouteListType>,
-    isNewWindow?:boolean
+    isNewWindow?:boolean,
+    authority?:Array<string>,
+    hideItem?:boolean
 }
 
 //配置路由
@@ -25,6 +28,7 @@ const ROUTER_CONFIG:Array<RouteListType> = [
         component: TestPage, //组件
         name: 'Page1', //名称
         isNewWindow:true,  //是否是新窗口打开
+        authority:['admin','other']
     },
     {
         path: '/page',  //访问路径
@@ -33,12 +37,14 @@ const ROUTER_CONFIG:Array<RouteListType> = [
         component: TestPage, //组件
         name: 'Page2', //名称
         // isNewWindow:true,
+        authority:['admin'],
         children: [
             {
                 path: '/page/pageOne',  //访问路径，自定义
                 exact: true,
                 component: TestPage1,
                 name: "Page2-1",
+                authority:['other'],
                 children: [
                     {
                         path: '/page/pageOne/pageOneChild',
@@ -80,6 +86,18 @@ const ROUTER_CONFIG:Array<RouteListType> = [
         exact: true,
         name: 'Page4',
         component: TestPage,
+        authority:['admin','other'],
+        children: [
+
+        ]
+    },
+    {
+        path: '/404',  //自定义404页面，
+        layout: Layout2,
+        hideItem:true,   //是否不显示
+        exact: true,
+        name: '页面未找到',
+        component: NotFound,
         children: [
 
         ]

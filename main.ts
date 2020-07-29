@@ -1,12 +1,12 @@
 //不进行桌面开发就无需处理此处
 
-var electron = require('electron')  //引入electron模块
+const electron = require('electron')  //引入electron模块
 
-var app = electron.app   // 创建electron引用
-var globalShortcut = electron.globalShortcut;
-var BrowserWindow = electron.BrowserWindow;  //创建窗口引用
+const app = electron.app   // 创建electron引用
+const globalShortcut = electron.globalShortcut;
+const BrowserWindow = electron.BrowserWindow;  //创建窗口引用
 
-var mainWindow = null ;  //声明要打开的主窗口
+let mainWindow = null ;  //声明要打开的主窗口
 app.on('ready',()=>{
     mainWindow = new BrowserWindow({width:400,height:400})   //设置打开的窗口大小
     mainWindow.loadURL('http://localhost:3000')  //加载那个页面

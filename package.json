@@ -1,7 +1,7 @@
 {
   "name": "jjg_project",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "main.ts",
   "private": true,
   "scripts": {
     "electron": "electron .",
@@ -31,6 +31,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/lodash-es": "^4.17.3",
     "@types/qs": "^6.9.3",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",

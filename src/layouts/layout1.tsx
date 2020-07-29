@@ -1,9 +1,12 @@
 import * as React from 'react';
 
 
-function Layout1(props: any) {
+interface PropsType {
+    children:React.ReactNode | string | React.ReactElement
+}
+
+function Layout1(props: PropsType):React.ReactNode {
     const { children } = props;
-    console.log(children)
     return (
         <>
             <div className="left">

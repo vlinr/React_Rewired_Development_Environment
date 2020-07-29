@@ -30,7 +30,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const LodashWebpackPlugin = require('lodash-webpack-plugin')
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
 
-const theme = require('./theme.js');
+const theme = require('./theme.ts');
 // SKIP_PREFLIGHT_CHECK = true
 
 const rewiredMap = () => config => {
