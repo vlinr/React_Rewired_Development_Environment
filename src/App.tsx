@@ -32,7 +32,7 @@ function App() {
 
 {/* <Router>
       <Switch>
-        <Route exact path={`/`} component={TestPage} /> 直接去登录页面，判断是否登录 
+        <Route exact path={`/`} component={TestPage} />  
         <Route exact path={`/login`} component={TestPage} />
         <Layout>
           <Switch>

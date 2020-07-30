@@ -1,5 +1,7 @@
+//action撰写
+
 import {
-    TEST_DEFAULT,
+    TEST_DEFAULT
 } from '../constants/test';
 
 interface ReduxTestType{

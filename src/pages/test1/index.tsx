@@ -3,7 +3,7 @@ import './index.less';
 import Ball from '../../components/Ball';
 const memo = React.memo;
 
-function TestPage1() {
+function TestPage1():React.ReactElement<any> {
 
     return <div className="test">
         <Ball name={`Electron`} />

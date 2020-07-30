@@ -3,7 +3,7 @@ import styles from './layout2.module.less';
 import { Link, useHistory } from 'react-router-dom';
 import {cloneDeep} from 'lodash-es';
 //生成访问的item
-import ROUTER_CONFIG, { RouteListType } from '../config/router.config';
+import ROUTER_CONFIG, { RouteItemType } from '../config/router.config';
 
 const { useState, useCallback, useEffect } = React;
 
@@ -30,13 +30,13 @@ console.log(styles)  //模块化使用less或者css
 //     </>
 // }
 
-function routerChangeAuthority(routerList:Array<RouteListType>) {
+function routerChangeAuthority(routerList:Array<RouteItemType>) {
     let authority:Array<string> = [];
-    const ROUTER_LIST:Array<RouteListType> = cloneDeep(routerList);
+    const ROUTER_LIST:Array<RouteItemType> = cloneDeep(routerList);
     //使用深度优先遍历
-    ROUTER_LIST.map((item:RouteListType) => {
+    ROUTER_LIST.map((item:RouteItemType) => {
         authority = item.authority || [];
-        const childMap:Function = (data:RouteListType) => {
+        const childMap:Function = (data:RouteItemType) => {
             !data.authority ? data.authority = authority : authority = data.authority;
             data.children && data.children.map(child => childMap(child)); //检查是否有下一级，有就继续
         }
@@ -47,9 +47,12 @@ function routerChangeAuthority(routerList:Array<RouteListType>) {
 
 const USER_AUTHORITY = 'other'; //用户角色,在authority数组去寻找是否有这个角色，有则显示，没有则不渲染
 
-function Layout2(props: RouteListType): React.ReactNode {
+function Layout2(props: RouteItemType): React.ReactElement<RouteItemType> {
+
     const { children } = props; //获得子元素，渲染到对应的地方即可
+
     const history = useHistory();
+
     const [routerSelectKey, setRouterSelectKey] = useState(history.location.pathname);
 
     useEffect(() => {
@@ -58,11 +61,11 @@ function Layout2(props: RouteListType): React.ReactNode {
 
     //渲染导航
     const childMap: Function = useCallback(
-        (data: RouteListType) => {
+        (data: RouteItemType) => {
             return !data?.hideItem && ((data?.authority || [])?.indexOf(USER_AUTHORITY) > -1 || (data?.authority || [])?.length === 0) && <div key={`${data.path}`}>
                 <Link to={`${data.path}`} className={`${routerSelectKey == data.path && styles.active}`} target={data.isNewWindow && '_blank' || ''}>{data.name}</Link>
                 {
-                    data.children && data.children.map((child: RouteListType) => childMap(child))
+                    data.children && data.children.map((child: RouteItemType) => childMap(child))
                 }
             </div>
         },
@@ -70,10 +73,10 @@ function Layout2(props: RouteListType): React.ReactNode {
     )
     
     const routerToJSX: Function = useCallback(
-        (routeList: Array<RouteListType>) => {
+        (routeList: Array<RouteItemType>) => {
             return <>
                 {
-                    routerChangeAuthority(routeList).map((item: RouteListType): React.ReactNode => {
+                    routerChangeAuthority(routeList).map((item: RouteItemType): React.ReactNode => {
                         return childMap(item)
                     })
                 }

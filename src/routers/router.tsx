@@ -1,36 +1,44 @@
+//路由渲染，包括登录重定向
 import * as React from 'react'
+
 import { Redirect, Route } from 'react-router-dom';
+import { LOGIN_PATH } from '../config/config';
+import {RouteType} from '../config/router.config';
 
 const { memo } = React;
-interface AuthRouterType {
-    component: any,
-    layout: any,
-    exact: boolean,
-    path: string,
-}
 
-//检查用户是否登录等操作，如果没有登录，则重定向到登录页面，如果登录了，就返回传进来的组件
-function AuthRouter({ component: Component, layout: Layout, ...rest }:AuthRouterType): React.ReactElement {
-    console.log(Component)
+//用户是否登录
+const USER_LOGIN_SUCCESS: boolean = true; //这个应该放在路由切换的时候，进行校验
+
+//检查用户
+function AuthRouter({ component: Component, layout: Layout,path, ...rest }: RouteType): React.ReactElement<RouteType> {
+    if (path === LOGIN_PATH) {
+        return (
+            <Layout>
+                <Route
+                    {...rest}
+                    path={path}
+                    render={(): JSX.Element => {
+                        return <Component />
+                    }}
+                />
+            </Layout>
+        );
+    }
     return (
         <Layout>
             <Route
                 {...rest}
-                render={({ location }) => {
-                    //针对登录得系统，需要在此判断是否登录，没有登录进行重定向到登录页面
-                    // if ('登录了') {
-                    return <Component />;
-                    // }
-                    // return (
-                    //     <Redirect to={{ pathname: `/login`, state: { from: location } }} />
-                    // );
+                path={path}
+                render={({ location }): JSX.Element => {
+                    //在此处校验是否登录
+                    if (!USER_LOGIN_SUCCESS) return <Redirect to={{ pathname: LOGIN_PATH, state: location }} />
+                    return <Component />
                 }}
             />
         </Layout>
     );
 
 }
+
 export default memo(AuthRouter);
-
-
-//路由转化

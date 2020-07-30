@@ -5,7 +5,7 @@ interface PropsType {
     children:React.ReactNode | string | React.ReactElement
 }
 
-function Layout1(props: PropsType):React.ReactNode {
+function Layout1(props: PropsType):React.ReactElement {
     const { children } = props;
     return (
         <>

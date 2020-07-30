@@ -32,13 +32,14 @@ class Request {
     constructor(params: RequestParams) {
         this.requestParams = Object.assign(defaultParams, params) as RequestParams;
     }
+
     //请求数据
     public fetch(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.requestParams.method?.toLocaleLowerCase() == 'get' ?
                 fetch(this.requestParams.url + this.requestParams.api, {
                     headers: new Headers(this.requestParams.headers),
-                    method: this.requestParams.method, 
+                    method: this.requestParams.method,
                     mode: this.requestParams.cors ? 'cors' : 'no-cors'
                 }).then(res => res.json())
                     .catch(error => reject(error))
@@ -46,7 +47,7 @@ class Request {
                 :
                 fetch(this.requestParams.url + this.requestParams.api, {
                     headers: new Headers(this.requestParams.headers),
-                    method: this.requestParams.method, 
+                    method: this.requestParams.method,
                     body: this.requestParams.dataType == 'json' ? qs.stringify(this.requestParams.data) : this.requestParams.data, // data can be `string` or {object}!
                     mode: this.requestParams.cors ? 'cors' : 'no-cors'
                 }).then(res => res.json())

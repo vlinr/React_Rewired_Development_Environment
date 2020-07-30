@@ -6,11 +6,15 @@ export interface PropsType {
     name: String | React.ReactNode
 }
 
-function Ball({ name }: PropsType):React.ReactElement<PropsType> {
+function Ball({ name }: PropsType): React.ReactElement<PropsType> {
     return <>
-        <span className="span">
-            {name}
-        </span>
+        <div className="wrap">
+            <div className="inner"></div>
+            <div className="x">
+                <div className="y"></div>
+                <div className="z"></div>
+            </div>
+        </div>
     </>
 }
 

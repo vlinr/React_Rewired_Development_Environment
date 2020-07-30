@@ -3,7 +3,8 @@ import Ball from '../../components/Ball';
 const useCallback = React.useCallback;
 const memo = React.memo;
 
-function TestPage() {
+    
+function TestPage():React.ReactElement<any> {
 
     const getUrlParams = useCallback(
         (url, name) => {

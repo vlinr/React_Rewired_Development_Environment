@@ -1,22 +1,23 @@
+//router渲染，基本无需更改
+
 import React from 'react';
-import { BrowserRouter as Router, Switch ,Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
 //路由配置文件
-import ROUTER_CONFIG,{RouteListType} from '../config/router.config';
+import ROUTER_CONFIG, { RouteItemType } from '../config/router.config';
 //重写路由，对布局进行更改
 import AuthRouter from './router';
-const userAuthority = 'admin'; //用户角色,在authority数组去寻找是否有这个角色，有则显示，没有则不渲染
-
+import { USER_AUTHORITY } from '../config/config';
 
 //转为一维数组，并且处理
-function routerToFlatten(routeList:Array<RouteListType>) {
-    let result:Array<RouteListType> = []
-        , layout:React.ReactNode = ''
-        , authority:Array<string> = [];
+function routerToFlatten(routeList: Array<RouteItemType>) {
+    let result: Array<RouteItemType> = []
+        , layout: React.ReactNode = ''
+        , authority: Array<string> = [];
     //使用深度优先遍历
-    routeList.map((item:RouteListType) => {
+    routeList.map((item: RouteItemType) => {
         layout = item.layout;
         authority = item.authority || [];
-        const childMap = (data:RouteListType) => {
+        const childMap = (data: RouteItemType) => {
             !data.layout ? data.layout = layout : layout = data.layout; //检查是否有布局，没有就使用上一次检测出来的布局
             !data.authority ? data.authority = authority : authority = data.authority;
             result.push(data);//扁平化处理
@@ -26,20 +27,16 @@ function routerToFlatten(routeList:Array<RouteListType>) {
     })
     return result;
 }
+
 export default (
     <Router>
         <Switch>
             {
                 routerToFlatten(ROUTER_CONFIG).map((item, index) => {
-                    return ((item?.authority || [])?.indexOf(userAuthority) > -1 || (item?.authority || [])?.length === 0) && <AuthRouter exact key={index} path={item.path} component={item.component} layout={item.layout} ></AuthRouter>
+                    return ((item?.authority || [])?.indexOf(USER_AUTHORITY) > -1 || (item?.authority || [])?.length === 0) && <AuthRouter exact key={index} path={item.path} component={item.component} layout={item.layout} ></AuthRouter>
                 })
             }
             <Redirect to="/404" />
         </Switch>
     </Router>
 );
-
-
-
-
-//路由组件关联

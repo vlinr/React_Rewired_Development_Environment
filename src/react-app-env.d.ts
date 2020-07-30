@@ -5,3 +5,8 @@ declare module "*.less" {
     const less: any;
     export default less;
 }
+
+declare module "*" {
+    const Layout:any;
+    export default Layout;
+}
