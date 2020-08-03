@@ -128,7 +128,7 @@ const proxyApi = {
         pathRewrite: {
             '^/api': '/'
         }
-    },
+    }
 }
 
 module.exports = {
@@ -189,7 +189,7 @@ module.exports = {
         dropConsole(),
         // 关闭mapSource
         rewiredMap(),
-        // 热跟新
+        // 热更新
         hotLoader(),  //需要安装和修改index.js
         // 配置babel解析器
         addBabelPlugins(

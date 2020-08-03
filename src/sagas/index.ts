@@ -1,9 +1,9 @@
 import { fork } from 'redux-saga/effects';
 
 import {
-    test
-} from './test';
+    login
+} from './login';
 
 export default function* rootSaga() {
-    yield fork(test);
+    yield fork(login);
 }

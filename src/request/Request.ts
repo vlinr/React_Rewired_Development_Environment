@@ -1,7 +1,7 @@
 import qs from 'qs';
 
 export interface RequestParams {
-    url?: string  //请求的前缀，也就是域名，如果使用通用域名则可以不穿
+    url?: string  //请求的前缀，也就是域名，如果使用通用域名则可以不传
     api: string,  //请求的api
     method?: string, //请求的方式
     cors?: boolean, //是否跨域共享资源
@@ -16,6 +16,7 @@ export interface Headers {
 }
 
 const defaultParams: RequestParams = {
+    url: '',
     api: '',
     method: 'get',
     data: '',
@@ -36,23 +37,27 @@ class Request {
     //请求数据
     public fetch(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.requestParams.method?.toLocaleLowerCase() == 'get' ?
-                fetch(this.requestParams.url + this.requestParams.api, {
-                    headers: new Headers(this.requestParams.headers),
-                    method: this.requestParams.method,
-                    mode: this.requestParams.cors ? 'cors' : 'no-cors'
-                }).then(res => res.json())
-                    .catch(error => reject(error))
-                    .then(response => resolve(response))
-                :
-                fetch(this.requestParams.url + this.requestParams.api, {
-                    headers: new Headers(this.requestParams.headers),
-                    method: this.requestParams.method,
-                    body: this.requestParams.dataType == 'json' ? qs.stringify(this.requestParams.data) : this.requestParams.data, // data can be `string` or {object}!
-                    mode: this.requestParams.cors ? 'cors' : 'no-cors'
-                }).then(res => res.json())
-                    .catch(error => reject(error))
-                    .then(response => resolve(response));
+            try {
+                this.requestParams.method?.toLocaleLowerCase() == 'get' ?
+                    fetch(this.requestParams.url + this.requestParams.api, {
+                        headers: new Headers(this.requestParams.headers),
+                        method: this.requestParams.method,
+                        mode: this.requestParams.cors ? 'cors' : 'no-cors'
+                    }).then(res => res?.json?.())
+                        .catch(error => reject(error))
+                        .then(response => resolve(response))
+                    :
+                    fetch(this.requestParams.url + this.requestParams.api, {
+                        headers: new Headers(this.requestParams.headers),
+                        method: this.requestParams.method,
+                        body: this.requestParams.dataType == 'json' ? qs.stringify(this.requestParams.data) : this.requestParams.data, // data can be `string` or {object}!
+                        mode: this.requestParams.cors ? 'cors' : 'no-cors'
+                    }).then(res => res?.json?.())
+                        .catch(error => reject(error))
+                        .then(response => resolve(response));
+            } catch (error) {
+                reject(error)
+            }
         })
     }
 }
