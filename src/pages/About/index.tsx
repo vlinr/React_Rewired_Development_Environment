@@ -22,6 +22,8 @@ const options: OptionsType = {
     theme: 'light', // 指定取色器样式主题，支持dark和light两种样式
 }
 
+// console.log(ColorPicker)
+
 // BraftEditor.use(ColorPicker(options));
 
 //关于我们

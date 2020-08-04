@@ -14,3 +14,4 @@ declare module 'braft-extensions/dist/color-picker' {
     const ColorPicker: any;
     export default ColorPicker;
 }
+

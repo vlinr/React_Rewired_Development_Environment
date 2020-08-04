@@ -22,7 +22,7 @@ const defaultParams: RequestParams = {
     data: '',
     dataType: 'json',
     headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/x-www-form-urlencoded'
     },
     cors: true
 }

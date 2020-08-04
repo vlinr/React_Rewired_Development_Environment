@@ -17,7 +17,8 @@ const {
     addTslintLoader
     // addBundleVisualizer
 } = require('customize-cra')
-const path = require('path')
+const path = require('path');
+const apiMocker = require('mocker-api');
 const paths = require('react-scripts/config/paths')
 const rewireReactHotLoader = require('react-app-rewire-hot-loader')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
@@ -29,7 +30,6 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 //打包成功有桌面提醒
 const LodashWebpackPlugin = require('lodash-webpack-plugin')
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier')
-
 const theme = require('./theme.ts');
 // SKIP_PREFLIGHT_CHECK = true
 
@@ -193,7 +193,7 @@ module.exports = {
         hotLoader(),  //需要安装和修改index.js
         // 配置babel解析器
         addBabelPlugins(
-            ['@babel/plugin-proposal-decorators',{ legacy: true }],
+            ['@babel/plugin-proposal-decorators', { legacy: true }],
             ["@babel/plugin-proposal-nullish-coalescing-operator"],
             ["@babel/plugin-proposal-optional-chaining"]
         ),
@@ -203,8 +203,8 @@ module.exports = {
         // 打包编译完成提醒
         addWebpackPlugin(
             new WebpackBuildNotifierPlugin({
-                title: '测试项目',
-                logo: path.resolve('./public/logo192.png'),
+                title: '微外包管理系统',
+                logo: path.resolve('./public/logo.png'),
                 suppressSuccess: true
             }),
             new MiniCssExtractPlugin({
@@ -236,9 +236,21 @@ module.exports = {
     ),
     // 配置devServer
     devServer: configFunction => (proxy, allowedHost) => {
-        proxy = process.env.NODE_ENV === 'development' ? proxyApi : null
+        //代理只有开发环境可用并且不是mocker的方式,mocker启动后不使用本地代理,防止api冲突
+        proxy = process.env.NODE_ENV === 'development'  && process.env.npm_lifecycle_event !== 'mocker' ? proxyApi : {};
         // allowedHost： 添加额外的地址
-        const config = configFunction(proxy, allowedHost)
+        const config = configFunction(proxy, allowedHost);
+        //配置mocker 
+        if(process.env.npm_lifecycle_event === 'mocker'){
+            config.before = app=>{
+                apiMocker(app, path.resolve('./src/mocker/index.js'), {
+                    proxy: {
+                        '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:3000'  //匹配路径
+                    },
+                    changeHost: true,
+                })
+            }
+        }
         return config
     }
 }

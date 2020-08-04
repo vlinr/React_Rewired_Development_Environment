@@ -33,7 +33,7 @@ const LoginForm = (): React.ReactElement => {
                     message.error(res.msg);
                     setLoading(false);
                 }else{
-                    localStorage.setItem(USER_TOKEN_NAME,res.result.token);
+                    localStorage.setItem(USER_TOKEN_NAME,res.token);
                     message.success(res.msg);
                     setLoading(false);
                     setTimeout(() => {
