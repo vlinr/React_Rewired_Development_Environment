@@ -29,9 +29,9 @@ const defaultParams: RequestParams = {
 
 class Request {
     //请求参数
-    private requestParams: RequestParams;
+    private requestParams: RequestParams = defaultParams;
     constructor(params: RequestParams) {
-        this.requestParams = Object.assign(defaultParams, params) as RequestParams;
+        this.requestParams = {...this.requestParams,...params};
     }
 
     //请求数据

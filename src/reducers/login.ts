@@ -6,8 +6,8 @@ import {
 import { Action } from 'redux';
 
 // import Immutable from 'immutable';
-// const store = Immutable.Map({  //数据仓库
-//     data: null
+// const loginStore:Immutable.Map<string,any> = Immutable.Map({  //数据仓库
+//     userInfo: null
 // });
 
 export interface StoreType {
