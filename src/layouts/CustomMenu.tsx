@@ -63,6 +63,7 @@ interface MenuPrposType {
 }
 //去掉最后一个/
 const formatPath = (path: string): string => {
+    if(path === '/')return path;
     let reg = new RegExp('/' + "$");
     if (path.length > 0 && reg.test(path)) {
         return path.substring(0, path.length - 1);
@@ -121,6 +122,7 @@ const CustomMenu = forwardRef(({ collapsed, setParentCollapsed }: MenuPrposType,
         let historyPath: string = formatPath(history.location.pathname);
         setOpenKeys(findRouter(FLATTEN_ROUTER, historyPath));
     }, [ROOT_KEYS])
+    const subMenuClick = useCallback((key:string,hasComponet:boolean)=>hasComponet && history.push(key),[]);
 
     //设置打开的列表
     const onOpenChange: any = useCallback((openKeys: Array<string>) => {
@@ -144,7 +146,7 @@ const CustomMenu = forwardRef(({ collapsed, setParentCollapsed }: MenuPrposType,
             if (!data?.hideItem && ((data?.authority || [])?.indexOf(USER_AUTHORITY) > -1 || (data?.authority || []).length === 0)) {
                 const Icon: any = data?.icon || null;
                 if ((data?.children || [])?.length != 0) {
-                    return <Menu.SubMenu key={`${data.path}`} title={data.name} icon={Icon && <Icon /> || null}>
+                    return <Menu.SubMenu key={`${data.path}`} onTitleClick={({key})=>subMenuClick(key,data.component?true:false)} title={data.name} icon={Icon && <Icon /> || null}>
                         {
                             data?.children?.map((child: RouteItemType) => childMap(child))
                         }

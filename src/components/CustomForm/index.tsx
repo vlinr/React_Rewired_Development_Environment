@@ -2,9 +2,8 @@
 import * as React from 'react';
 import { Form, Input, Upload, Button, Radio, message, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import 'braft-editor/dist/index.css'
-import BraftEditor from 'braft-editor';
-const { useState, memo, useCallback,useEffect } = React;
+import CustomBraftEditor from '../CustomBraftEditor';
+const { useState, memo, useCallback, useEffect } = React;
 const { Option } = Select;
 const { Item } = Form;
 const FORM_LAYOUT_CONTENT = {
@@ -13,23 +12,23 @@ const FORM_LAYOUT_CONTENT = {
 };
 
 export interface CustomFormPropsType {
-    type:string,
-    name:string,
-    desc:string,
-    keywords:string,
-    descrption:string,
+    type: string,
+    name: string,
+    desc: string,
+    keywords: string,
+    descrption: string,
     tag: Array<string>,
     readnum: number,
     experienceType: number,
     show: number,
-    imgfile:string,
+    imgfile: string,
     experienceTypeInput: string,
-    content:string
+    content: string
 }
 
 interface PropsType {
     onSubmit: Function,
-    content?:CustomFormPropsType
+    content?: CustomFormPropsType
 }
 
 function beforeUpload(file: any) {
@@ -59,7 +58,7 @@ function getBase64(img: any, callback: Function) {
     reader.readAsDataURL(img);
 }
 
-function CustomForm({ onSubmit ,content}: PropsType): React.ReactElement<any> {
+function CustomForm({ onSubmit, content }: PropsType): React.ReactElement<any> {
 
     const onFinish = useCallback((values) => {
         onSubmit(values);
@@ -71,30 +70,32 @@ function CustomForm({ onSubmit ,content}: PropsType): React.ReactElement<any> {
 
     const [selectHref, setSelectHref] = useState(true);
 
+    const [editorState, setEditorState] = useState(null);
+    
     const [form] = Form.useForm();
 
-    useEffect(()=>{
+    useEffect(() => {
         content?.imgfile && setFiles(content.imgfile);
         content?.experienceTypeInput && setExFiles(content.experienceTypeInput);
-        content?.experienceType === 1 ? setSelectHref(true):setSelectHref(false);
-    },[content])
+        content?.experienceType === 1 ? setSelectHref(true) : setSelectHref(false);
+    }, [content])
 
     const handleChange = useCallback((file, type) => {
         getBase64(file.fileList[0].originFileObj, (src: string) => {
             // type === 1 ? setFiles(src) : setExFiles(src);
             //转化数据为base64
-            if(type === 1){
-                form.setFieldsValue({'imgfile':src});
+            if (type === 1) {
+                form.setFieldsValue({ 'imgfile': src });
                 setFiles(src);
-            }else{
-                form.setFieldsValue({'experienceTypeInput':src});
+            } else {
+                form.setFieldsValue({ 'experienceTypeInput': src });
                 setExFiles(src);
             }
         })
     }, [])
 
     const handleRadioChange = useCallback((radio) => {
-        radio.target.value === 1 ? setSelectHref(true):setSelectHref(false);
+        radio.target.value === 1 ? setSelectHref(true) : setSelectHref(false);
     }, [])
 
     return <Form {...FORM_LAYOUT_CONTENT} form={form} name="nest-messages" style={{ marginTop: 50 }} onFinish={onFinish}>
@@ -109,13 +110,13 @@ function CustomForm({ onSubmit ,content}: PropsType): React.ReactElement<any> {
             <Input placeholder="请输入文章标题" />
         </Item>
         <Item name={['desc']} label="简介" initialValue={content?.desc} >
-            <Input.TextArea rows={4} autoSize={false} placeholder="请输入描述内容"  style={{resize:'none'}}/>
+            <Input.TextArea rows={4} autoSize={false} placeholder="请输入描述内容" style={{ resize: 'none' }} />
         </Item>
         <Item name={['keywords']} label="关键词（seo）" initialValue={content?.keywords} rules={[{ required: true, message: "必须设置关键词" }]}>
             <Input placeholder="文章关键词" />
         </Item>
         <Item name={['descrption']} label="描述（seo）" initialValue={content?.descrption} rules={[{ required: true, message: "必须设置描述" }]} >
-            <Input.TextArea rows={4} autoSize={false} placeholder="文章描述，用于seo"  style={{resize:'none'}}/>
+            <Input.TextArea rows={4} autoSize={false} placeholder="文章描述，用于seo" style={{ resize: 'none' }} />
         </Item>
         <Item name={['tag']} label="标签" initialValue={content?.tag?.join('|')} rules={[{ required: true, message: "至少设置一个标签" }]}>
             <Input placeholder="请输入标签，多个以 | 分割" />
@@ -159,11 +160,8 @@ function CustomForm({ onSubmit ,content}: PropsType): React.ReactElement<any> {
                 <Radio value={1}>否</Radio>
             </Radio.Group>
         </Item>
-        <Item name={['content']} label="内容" rules={[{ required: true, message: "请输入内容" }]} initialValue={BraftEditor.createEditorState(content?.content)}>
-            <BraftEditor
-                placeholder="请输入具体内容"
-                style={{ border: '1px solid #d9d9d9' }}
-            />
+        <Item name={['content']} label="内容" rules={[{ required: true, message: "请输入内容" }]}>
+            <CustomBraftEditor editorState={editorState} setEditorState={setEditorState} defaultValue='' />
         </Item>
         <Item wrapperCol={{ span: 24 }} style={{ textAlign: "center", marginTop: 50 }}>
             <Button htmlType="submit" type="primary" size="large" style={{ width: 200 }}>保存</Button>
