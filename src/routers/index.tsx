@@ -3,11 +3,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Redirect, Route } from 'react-router-dom';
 //路由配置文件
-import ROUTER_CONFIG, { RouteItemType } from '../config/router.config';
+import ROUTER_CONFIG, { RouteItemType } from '@/config/router.config';
 //重写路由，对布局进行更改
 import AuthRouter from './router';
-import { USER_AUTHORITY } from '../config/config';
-import { routerFlattenAndChangeInfo } from '../utils/routerToFlatten';
+import { USER_AUTHORITY } from '@/config/config';
+import { routerFlattenAndChangeInfo } from '@/utils/routerToFlatten';
 const FLATTEN_ROUTER: Array<RouteItemType> = routerFlattenAndChangeInfo(ROUTER_CONFIG);
 
 //均要找到第一级

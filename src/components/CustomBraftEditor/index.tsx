@@ -11,7 +11,7 @@ import { ContentUtils } from 'braft-utils';
 import { ImageUtils } from 'braft-finder'
 import uploadFile from '../../utils/uploadFile';
 import { USER_TOKEN_NAME, REQUEST_SUCCESS } from '../../config/config';
-import { UPLOAD_FILR_API } from '../../config/api.config';
+import { UPLOAD_FILE_URL } from '../../config/api.config';
 import Table from 'braft-extensions/dist/table';
 import Markdown from 'braft-extensions/dist/markdown';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
@@ -66,7 +66,7 @@ function BraftEditorCustom({ editorState, setEditorState, defaultValue, disabled
         if (!params.file) {
             return false
         }
-        let response: any = await uploadFile(params.file, UPLOAD_FILR_API, localStorage.getItem(USER_TOKEN_NAME));
+        let response: any = await uploadFile(params.file, UPLOAD_FILE_URL, localStorage.getItem(USER_TOKEN_NAME));
         if (response.statusCode == REQUEST_SUCCESS) {
             message.success('上传成功');
             setEditorState(ContentUtils.insertMedias(editorState, [{

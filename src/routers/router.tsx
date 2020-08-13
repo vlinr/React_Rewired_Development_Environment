@@ -2,13 +2,14 @@
 import * as React from 'react'
 
 import { Redirect, Route } from 'react-router-dom';
-import { LOGIN_PATH } from '../config/config';
-import { RouteType } from '../config/router.config';
-import { USER_TOKEN_NAME } from '../config/config';
+import { LOGIN_PATH } from '@/config/config';
+import { RouteType } from '@/config/router.config';
+import { USER_TOKEN_NAME } from '@/config/config';
+import AsyncImport from '@/utils/asyncImport';
 const { memo } = React;
 
 //检查用户
-function AuthRouter({ component: Component, layout: Layout, path, name, ...rest }: RouteType): React.ReactElement<RouteType> {
+function AuthRouter({ component, layout: Layout, path, name, ...rest }: RouteType): React.ReactElement<RouteType> {
     //登录
     if (path === LOGIN_PATH) {
         return (
@@ -19,6 +20,7 @@ function AuthRouter({ component: Component, layout: Layout, path, name, ...rest 
                     render={(): JSX.Element => {
                         document.title = name;
                         localStorage.removeItem(USER_TOKEN_NAME);
+                        let Component: any = AsyncImport(component)
                         return <Component />
                     }}
                 />
@@ -35,6 +37,7 @@ function AuthRouter({ component: Component, layout: Layout, path, name, ...rest 
                     document.title = name;
                     //在此处校验是否登录
                     if (!localStorage.getItem(USER_TOKEN_NAME)) return <Redirect to={{ pathname: LOGIN_PATH, state: location }} />
+                    let Component: any = AsyncImport(component)
                     return <Component />
                 }}
             />

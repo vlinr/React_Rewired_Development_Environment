@@ -1,4 +1,4 @@
-import { RouteItemType } from '../config/router.config';
+import { RouteItemType } from '@/config/router.config';
 import {cloneDeep} from 'lodash-es';
 const routerFlatten = (routeList: Array<RouteItemType>):Array<any> => {
     let result: Array<RouteItemType> = [];  //这里定义为Array<RouteItemType>，默认会把/得path更换掉

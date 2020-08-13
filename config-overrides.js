@@ -166,19 +166,21 @@ module.exports = {
         // addWebpackModules(),
         //相当于lib引入直接 @lib即可
         addWebpackAlias({
-            '@': resolveAlias('src'),
-            lib: resolveAlias('src/lib'),
-            components: resolveAlias('src/components'),
-            images: resolveAlias('src/assets/images'),
-            styles: resolveAlias('src/assets/styles'),
-            utils: resolveAlias('src/utils'),
-            pages: resolveAlias('src/pages'),
-            store: resolveAlias('src/store'),
-            router: resolveAlias('src/router'),
-            locale: resolveAlias('src/locale'),
-            layouts: resolveAlias('src/layouts'),
+            ['@']: path.resolve(__dirname,'./src'),
+            ['lib']: path.resolve(__dirname,'./src/lib'),
+            ['components']: path.resolve(__dirname,'./src/components'),
+            // lib: resolveAlias('src/lib'),
+            // components: resolveAlias('src/components'),
+            // images: resolveAlias('src/assets/images'),
+            // styles: resolveAlias('src/assets/styles'),
+            // utils: resolveAlias('src/utils'),
+            // pages: resolveAlias('src/pages'),
+            // store: resolveAlias('src/store'),
+            // router: resolveAlias('src/router'),
+            // locale: resolveAlias('src/locale'),
+            // layouts: resolveAlias('src/layouts'),
             // 处理警告  React-Hot-Loader: react-🔥-dom patch is not detected. React 16.6+ features may not work.
-            'react-dom': '@hot-loader/react-dom'
+            ['react-dom']: '@hot-loader/react-dom'
             // 解决antd 的icon图标打包体积大
             // '@ant-design/icons': 'purched-antd-icons'
         }),

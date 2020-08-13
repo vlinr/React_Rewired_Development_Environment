@@ -1,5 +1,5 @@
 import * as React from 'react'
-import CustomBraftEditor from '../../components/CustomBraftEditor';
+import CustomBraftEditor from '@/components/CustomBraftEditor';
 import './index.module.less';
 import { Form, Button, message } from 'antd';
 const { memo, useCallback, useState } = React;

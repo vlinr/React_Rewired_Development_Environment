@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
@@ -25,6 +26,6 @@
     "resolveJsonModule": true
   },
   "include": [
-    "./src/**/*"
+    "./src/"
   ]
 }
